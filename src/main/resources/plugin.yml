@@ -1,0 +1,12 @@
+name: PlatinumNuke
+main: com.platinum_mc.a248.nuker.PlatinumNukePlugin
+author: A248
+version: ${project.version}
+
+commands:
+  nuker:
+    usage: /nuker
+    description: User command
+  nukeradmin:
+    usage: /nukeradmin
+    description: Admin command

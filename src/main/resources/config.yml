@@ -1,0 +1,11 @@
+warning-time-seconds: 5
+interval-between-volley: 500
+iterations-per-volley: 5
+fireball-velocity: 5
+warning-message: '&cWarning: The area will be nuked soon.'
+commands:
+  world-not-exist: '&e%WORLD% &cdoes not exist.'
+  no-permission: '&cSorry, you cannot use this.'
+  usage: '&cUsage: /nuker nuke &e<x> <z> <radius> [world]'
+  not-a-number: '&e%INPUT% &c is not a number'
+config-version: 1
