@@ -125,7 +125,7 @@ class PlatinumNuke {
 	}
 	
 	private void spawnEntityWithVelocity(Location loc, EntityType type, Vector velocity) {
-		Entity entity = loc.getWorld().spawnEntity(loc, type);
+		Entity entity = loc.getWorld().spawnEntity(loc.setDirection(velocity), type);
 		if (entity == null) {
 			throw new IllegalStateException(
 					"Bukkit refused to spawn entity of type " + type + " at " + loc);

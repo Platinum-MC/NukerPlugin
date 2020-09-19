@@ -20,6 +20,10 @@ public class NukingConf {
 		return new Vector(0, -2.5, 0);
 	}
 	
+	boolean smallFireball() {
+		return false;
+	}
+	
 	String warningMessage(int x, int z) {
 		return "&cWarning: The area around " + x + ", " + z + " will be nuked soon.";
 	}

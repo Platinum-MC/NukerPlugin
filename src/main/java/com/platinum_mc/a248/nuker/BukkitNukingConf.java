@@ -46,6 +46,11 @@ class BukkitNukingConf extends NukingConf {
 	}
 	
 	@Override
+	boolean smallFireball() {
+		return config.getBoolean("small-fireballs", super.smallFireball());
+	}
+	
+	@Override
 	String warningMessage(int x, int z) {
 		return config.getString("warning-message", super.warningMessage(x, z))
 				.replace("%X%", Integer.toString(x)).replace("%Z%", Integer.toString(z));

@@ -6,7 +6,9 @@ interval-between-volley: 500
 iterations-per-volley: 5
 # Velocity of fireballs in the Y direction downward
 # Caution: Setting to a value 4 or above can cause excessive velocity warnings
-fireball-velocity: 2.5
+fireball-velocity: 1.5
+# Whether to use small fireballs
+small-fireballs: false
 # Warning message sent to players inside the radius + buffer
 warning-message: '&cWarning: The area around %X%, %Z% will be nuked soon.'
 # Players who are less than radius + buffer blocks from the target will be warned

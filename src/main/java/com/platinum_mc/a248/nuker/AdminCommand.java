@@ -1,5 +1,7 @@
 package com.platinum_mc.a248.nuker;
 
+import java.util.Locale;
+
 import org.bukkit.command.CommandSender;
 
 class AdminCommand extends NukerCommand {
@@ -14,12 +16,19 @@ class AdminCommand extends NukerCommand {
 			sendMessage(sender, core.getConfig().noPermission());
 			return;
 		}
-		if (args.length == 1 && args[0].equalsIgnoreCase("reload")) {
-			core.reload();
-			sendMessage(sender, "&aReloaded");
-			return;
+
+		if (args.length > 0) {
+			switch (args[0].toLowerCase(Locale.ENGLISH)) {
+			case "reload":
+				core.reload();
+				sendMessage(sender, "&aReloaded");
+				return;
+			default:
+				break;
+			}
 		}
 		sendMessage(sender, "&cUnknown admin command.");
+		
 	}
 
 }
