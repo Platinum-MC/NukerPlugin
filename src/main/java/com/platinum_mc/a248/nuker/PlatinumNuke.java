@@ -19,8 +19,12 @@ import org.bukkit.World;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
+
+import net.md_5.bungee.api.ChatColor;
 
 class PlatinumNuke {
 
@@ -68,18 +72,35 @@ class PlatinumNuke {
 		return conf;
 	}
 	
-	void nukeLater(NukeOrder order) {
-		runLater(() -> {
-			nuke(order);
-		}, Duration.ofSeconds(conf.warningTimeSeconds()));
-	}
-	
-	void nuke(NukeOrder order) {
+	void warnThenNuke(NukeOrder order) {
 		String worldName = order.getWorld();
 		World world = getPlugin().getServer().getWorld(worldName);
 		if (world == null) {
 			throw new IllegalArgumentException("World " + worldName + " does not exist");
 		}
+		Location targetLocation = new Location(world, order.getX(), 60, order.getZ());
+		String message = ChatColor.translateAlternateColorCodes('&',
+				conf.warningMessage(order.getX(), order.getZ()));
+
+		double distanceSquared = order.getRadius() + conf.warningBuffer();
+		distanceSquared = distanceSquared * distanceSquared;
+
+		for (Player player : getPlugin().getServer().getOnlinePlayers()) {
+			Location playerLoc = player.getLocation();
+			if (!playerLoc.getWorld().getName().equalsIgnoreCase(worldName)) {
+				continue;
+			}
+			if (playerLoc.distanceSquared(targetLocation) > distanceSquared) {
+				continue;
+			}
+			player.sendMessage(message);
+		}
+		runLater(() -> {
+			nuke(order, world);
+		}, Duration.ofSeconds(conf.warningTimeSeconds()));
+	}
+	
+	private void nuke(NukeOrder order, World world) {
 		runRepeating(() -> {
 			ThreadLocalRandom tlr = ThreadLocalRandom.current();
 			for (int n = 0; n < conf.iterationsPerVolley(); n++) {
@@ -92,7 +113,7 @@ class PlatinumNuke {
 					spawnFireball(new Location(world, x, 255, z));
 				}
 			}
-		}, Duration.ofMillis(conf.intervalBetweenVolleys()));
+		}, Duration.ofMillis(conf.intervalBetweenVolleys()), conf.amountOfVolleys());
 	}
 	
 	private void strikeLightning(Location loc) {
@@ -116,9 +137,21 @@ class PlatinumNuke {
 		getPlugin().getServer().getScheduler().runTaskLater(getPlugin(), command, toTicks(delay));
 	}
 	
-	private void runRepeating(Runnable command, Duration interval) {
+	private void runRepeating(Runnable command, Duration interval, int repeatCount) {
 		long ticks = toTicks(interval);
-		getPlugin().getServer().getScheduler().runTaskTimer(getPlugin(), command, ticks, ticks);
+		new BukkitRunnable() {
+			
+			private int count;
+			@Override
+			public void run() {
+				count++;
+				if (count > repeatCount) {
+					cancel();
+					return;
+				}
+				command.run();
+			}
+		}.runTaskTimer(getPlugin(), ticks, ticks);
 	}
 	
 	private long toTicks(Duration duration) {

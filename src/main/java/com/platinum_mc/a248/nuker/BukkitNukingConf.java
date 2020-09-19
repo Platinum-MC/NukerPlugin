@@ -22,8 +22,8 @@ class BukkitNukingConf extends NukingConf {
 	}
 	
 	@Override
-	int warningTimeSeconds() {
-		return config.getInt("warning-time-seconds", super.warningTimeSeconds());
+	int amountOfVolleys() {
+		return config.getInt("amount-of-volleys", super.amountOfVolleys());
 	}
 	
 	@Override
@@ -38,16 +38,27 @@ class BukkitNukingConf extends NukingConf {
 	
 	@Override
 	Vector fireballVelocity() {
-		int y = config.getInt("fireball-velocity", -1);
-		if (y == -1) {
+		double y = config.getDouble("fireball-velocity", -1.0);
+		if (y == -1.0) {
 			return super.fireballVelocity();
 		}
 		return new Vector(0, -y, 0);
 	}
 	
 	@Override
-	String warningMessage() {
-		return config.getString("warning-message", super.warningMessage());
+	String warningMessage(int x, int z) {
+		return config.getString("warning-message", super.warningMessage(x, z))
+				.replace("%X%", Integer.toString(x)).replace("%Z%", Integer.toString(z));
+	}
+	
+	@Override
+	int warningBuffer() {
+		return config.getInt("warning-buffer", super.warningBuffer());
+	}
+	
+	@Override
+	int warningTimeSeconds() {
+		return config.getInt("warning-time-seconds", super.warningTimeSeconds());
 	}
 	
 	@Override

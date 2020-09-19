@@ -56,7 +56,7 @@ class UserCommand extends NukerCommand {
 			return;
 		}
 		NukeOrder order = new NukeOrder(world, x, z, radius);
-		core.nukeLater(order);
+		core.warnThenNuke(order);
 	}
 	
 	private void sendNotANumber(CommandSender sender, String input) {
