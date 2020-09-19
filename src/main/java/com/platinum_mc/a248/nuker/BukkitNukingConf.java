@@ -12,6 +12,8 @@ class BukkitNukingConf extends NukingConf {
 	
 	private final Logger logger;
 	
+	private static final int CONFIG_VERSION = 2;
+	
 	BukkitNukingConf(Configuration config) {
 		this.config = config;
 		logger = Logger.getLogger(getClass().getName());
@@ -19,6 +21,10 @@ class BukkitNukingConf extends NukingConf {
 		 * Both this and log4j2 configuration are required to actually turn on debug logging
 		 */
 		logger.setLevel(Level.ALL);
+
+		if (config.getInt("config-version", -1) != CONFIG_VERSION) {
+			logger.warning("Your configuration is outdated. Regenerate it to get the latest config values.");
+		}
 	}
 	
 	@Override
@@ -85,6 +91,22 @@ class BukkitNukingConf extends NukingConf {
 	@Override
 	String notANumber(String input) {
 		return config.getString("commands.not-a-number", super.notANumber(input)).replace("%INPUT%", input);
+	}
+	
+	@Override
+	int radiusLimit() {
+		return config.getInt("radius-limit", super.radiusLimit());
+	}
+	
+	@Override
+	String tooLargeRadius(int radius) {
+		return config.getString("commands.too-large-radius", super.tooLargeRadius(radius))
+				.replace("%RADIUS%", Integer.toString(radius));
+	}
+	
+	@Override
+	String negativeRadius() {
+		return config.getString("commands.negative-radius", super.negativeRadius());
 	}
 	
 }

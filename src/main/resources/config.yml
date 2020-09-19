@@ -15,9 +15,13 @@ warning-message: '&cWarning: The area around %X%, %Z% will be nuked soon.'
 warning-buffer: 20
 # How long do players have to clear out of the area before danger starts spawning?
 warning-time-seconds: 5
+# What is the maximum radius?
+radius-limit: 64
 commands:
   world-not-exist: '&e%WORLD% &cdoes not exist.'
   no-permission: '&cSorry, you cannot use this.'
   usage: '&cUsage: /nuke &e<x> <z> <radius> [world]'
   not-a-number: '&e%INPUT% &c is not a number'
-config-version: 1
+  too-large-radius: '&e%RADIUS%&c is too large'
+  negative-radius: '&cCannot specify a negative radius.'
+config-version: 2

@@ -55,6 +55,14 @@ class UserCommand extends NukerCommand {
 			sendNotANumber(sender, args[2]);
 			return;
 		}
+		if (radius < 0) {
+			sendMessage(sender, core.getConfig().negativeRadius());
+			return;
+		}
+		if (radius > core.getConfig().radiusLimit()) {
+			sendMessage(sender, core.getConfig().tooLargeRadius(radius));
+			return;
+		}
 		NukeOrder order = new NukeOrder(world, x, z, radius);
 		core.warnThenNuke(order);
 	}

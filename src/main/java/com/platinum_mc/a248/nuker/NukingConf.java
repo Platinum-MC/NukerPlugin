@@ -52,4 +52,16 @@ public class NukingConf {
 		return "&e" + input + " &c is not a number";
 	}
 	
+	int radiusLimit() {
+		return 64;
+	}
+	
+	String tooLargeRadius(int radius) {
+		return "&e" + radius + " &c is too large";
+	}
+	
+	String negativeRadius() {
+		return "&cCannot specify a negative radius.";
+	}
+	
 }
