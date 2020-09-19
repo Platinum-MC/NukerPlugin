@@ -4,8 +4,8 @@ author: A248
 version: ${project.version}
 
 commands:
-  nuker:
-    usage: /nuker
+  nuke:
+    usage: /nuke
     description: User command
   nukeradmin:
     usage: /nukeradmin

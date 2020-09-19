@@ -13,8 +13,9 @@ public class PlatinumNukePlugin extends JavaPlugin {
 		}
 		core = new PlatinumNuke(this, getDataFolder().toPath());
 		core.reload();
-		getCommand("nuker").setExecutor(new UserCommand(core));
+		getCommand("nuke").setExecutor(new UserCommand(core));
 		getCommand("nukeradmin").setExecutor(new AdminCommand(core));
+		getLogger().info("Enabled and ready");
 	}
 	
 	@Override

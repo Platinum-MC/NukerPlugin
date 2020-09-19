@@ -25,13 +25,13 @@ import org.bukkit.util.Vector;
 class PlatinumNuke {
 
 	private final JavaPlugin plugin;
-	private final Path configPath;
+	private final Path folder;
 	
 	private NukingConf conf;
 	
 	PlatinumNuke(JavaPlugin plugin, Path folder) {
 		this.plugin = plugin;
-		configPath = folder.resolve("config.yml");
+		this.folder = folder;
 		conf = new NukingConf();
 	}
 	
@@ -44,6 +44,10 @@ class PlatinumNuke {
 	}
 	
 	void reload0() throws IOException {
+		if (!Files.isDirectory(folder)) {
+			Files.createDirectories(folder);
+		}
+		Path configPath = folder.resolve("config.yml");
 		if (!Files.exists(configPath)) {
 			try (InputStream inputStream = getClass().getResource("/config.yml").openStream();
 					ReadableByteChannel rbc = Channels.newChannel(inputStream);

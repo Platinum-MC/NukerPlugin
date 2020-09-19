@@ -15,13 +15,13 @@ class UserCommand extends NukerCommand {
 			sendMessage(sender, core.getConfig().noPermission());
 			return;
 		}
-		if (args.length < 4) {
+		if (args.length < 3) {
 			sendUsage(sender);
 			return;
 		}
 		String world;
-		if (args.length == 5) {
-			world = args[4];
+		if (args.length == 4) {
+			world = args[3];
 			if (core.getPlugin().getServer().getWorld(world) == null) {
 				sendMessage(sender, core.getConfig().worldDoesNotExist(world));
 				return;
@@ -36,23 +36,23 @@ class UserCommand extends NukerCommand {
 		}
 		int x;
 		try {
-			x = Integer.parseInt(args[1]);
+			x = Integer.parseInt(args[0]);
 		} catch (NumberFormatException notANumber) {
-			sendNotANumber(sender, args[1]);
+			sendNotANumber(sender, args[0]);
 			return;
 		}
 		int z;
 		try {
-			z = Integer.parseInt(args[2]);
+			z = Integer.parseInt(args[1]);
 		} catch (NumberFormatException notANumber) {
-			sendNotANumber(sender, args[2]);
+			sendNotANumber(sender, args[1]);
 			return;
 		}
 		int radius;
 		try {
-			radius = Integer.parseInt(args[3]);
+			radius = Integer.parseInt(args[2]);
 		} catch (NumberFormatException notANumber) {
-			sendNotANumber(sender, args[3]);
+			sendNotANumber(sender, args[2]);
 			return;
 		}
 		NukeOrder order = new NukeOrder(world, x, z, radius);
