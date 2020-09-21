@@ -78,22 +78,26 @@ class PlatinumNuke {
 		if (world == null) {
 			throw new IllegalArgumentException("World " + worldName + " does not exist");
 		}
-		Location targetLocation = new Location(world, order.getX(), 60, order.getZ());
-		String message = ChatColor.translateAlternateColorCodes('&',
+		String warningMessage = ChatColor.translateAlternateColorCodes('&',
 				conf.warningMessage(order.getX(), order.getZ()));
 
-		double distanceSquared = order.getRadius() + conf.warningBuffer();
-		distanceSquared = distanceSquared * distanceSquared;
+		int buffer = conf.warningBuffer();
+		int maxX = order.getMaxX() + buffer;
+		int minX = order.getMinX() - buffer;
+		int maxZ = order.getMaxZ() + buffer;
+		int minZ = order.getMinZ() - buffer;
 
 		for (Player player : getPlugin().getServer().getOnlinePlayers()) {
 			Location playerLoc = player.getLocation();
 			if (!playerLoc.getWorld().getName().equalsIgnoreCase(worldName)) {
 				continue;
 			}
-			if (playerLoc.distanceSquared(targetLocation) > distanceSquared) {
+			int playerX = playerLoc.getBlockX();
+			int playerZ = playerLoc.getBlockZ();
+			if (playerX > maxX || playerX < minX || playerZ > maxZ || playerZ < minZ) {
 				continue;
 			}
-			player.sendMessage(message);
+			player.sendMessage(warningMessage);
 		}
 		runLater(() -> {
 			nuke(order, world);
