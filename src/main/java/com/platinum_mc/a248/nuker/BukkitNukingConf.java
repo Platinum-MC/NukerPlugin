@@ -52,6 +52,11 @@ class BukkitNukingConf extends NukingConf {
 	}
 	
 	@Override
+	int fireballSpawnHeight() {
+		return config.getInt("fireball-spawn-height", super.fireballSpawnHeight());
+	}
+	
+	@Override
 	boolean smallFireball() {
 		return config.getBoolean("small-fireballs", super.smallFireball());
 	}

@@ -105,16 +105,19 @@ class PlatinumNuke {
 	}
 	
 	private void nuke(NukeOrder order, World world) {
+		final int iterationsPerVolley = conf.iterationsPerVolley();
+		final int fireballSpawnHeight = conf.fireballSpawnHeight();
+
 		runRepeating(() -> {
 			ThreadLocalRandom tlr = ThreadLocalRandom.current();
-			for (int n = 0; n < conf.iterationsPerVolley(); n++) {
+			for (int n = 0; n < iterationsPerVolley; n++) {
 				int x = tlr.nextInt(order.getMinX(), order.getMaxX() + 1);
 				int z = tlr.nextInt(order.getMinZ(), order.getMaxZ() + 1);
 
 				if (tlr.nextBoolean()) {
 					strikeLightning(world.getHighestBlockAt(x, z).getLocation());
 				} else {
-					spawnFireball(new Location(world, x, 255, z));
+					spawnFireball(new Location(world, x, fireballSpawnHeight, z));
 				}
 			}
 		}, Duration.ofMillis(conf.intervalBetweenVolleys()), conf.amountOfVolleys());

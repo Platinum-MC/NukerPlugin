@@ -20,6 +20,10 @@ public class NukingConf {
 		return new Vector(0, -2.5, 0);
 	}
 	
+	int fireballSpawnHeight() {
+		return 255;
+	}
+	
 	boolean smallFireball() {
 		return false;
 	}
