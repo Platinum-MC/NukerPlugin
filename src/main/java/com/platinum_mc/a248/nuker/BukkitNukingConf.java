@@ -12,7 +12,7 @@ class BukkitNukingConf extends NukingConf {
 	
 	private final Logger logger;
 	
-	private static final int CONFIG_VERSION = 2;
+	private static final int CONFIG_VERSION = 3;
 	
 	BukkitNukingConf(Configuration config) {
 		this.config = config;
