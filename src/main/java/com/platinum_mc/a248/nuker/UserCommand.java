@@ -63,6 +63,7 @@ class UserCommand extends NukerCommand {
 			sendMessage(sender, core.getConfig().tooLargeRadius(radius));
 			return;
 		}
+		sendMessage(sender, core.getConfig().successMessage(x, z));
 		NukeOrder order = new NukeOrder(world, x, z, radius);
 		core.warnThenNuke(order);
 	}

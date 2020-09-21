@@ -64,4 +64,8 @@ public class NukingConf {
 		return "&cCannot specify a negative radius.";
 	}
 	
+	String successMessage(int x, int z) {
+		return "&7Nuking &e" + x + "&7, &e" + z + "&7...";
+	}
+	
 }

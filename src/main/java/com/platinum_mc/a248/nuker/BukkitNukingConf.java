@@ -109,4 +109,10 @@ class BukkitNukingConf extends NukingConf {
 		return config.getString("commands.negative-radius", super.negativeRadius());
 	}
 	
+	@Override
+	String successMessage(int x, int z) {
+		return config.getString("commands.success-message", super.successMessage(x, z))
+				.replace("%X%", Integer.toString(x)).replace("%Z%", Integer.toString(z));
+	}
+	
 }

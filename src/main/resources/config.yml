@@ -24,4 +24,5 @@ commands:
   not-a-number: '&e%INPUT% &c is not a number'
   too-large-radius: '&e%RADIUS%&c is too large'
   negative-radius: '&cCannot specify a negative radius.'
+  success-message: '&7Nuking &e%X%, %Z%...'
 config-version: 2
